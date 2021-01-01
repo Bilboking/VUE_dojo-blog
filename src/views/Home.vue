@@ -1,31 +1,39 @@
 <template>
   <div class="home">
-    Home
-    <p ref="p">My name is {{ name }} and my age is {{ age }}.</p>
-    <button @click="handleClick">click me</button>
+    <h1>Home</h1>
+    <input type="text" v-model="search">
+    <p>search term - {{ search }}</p>
+    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
+    <button @click="handleClick">Stop Watch</button>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-
+import { ref, computed, watch, watchEffect } from 'vue'
 
 export default {
   name: 'Home',
   setup() {
-    console.log('setup')
+    const search = ref('')
+    const names = ref(['mario', 'yoshi', 'luigi', 'toad', 'bowser', 'koopa', 'peach'])
 
-    const p = ref(null)
+    const stopWatch = watch(search, () => {
+      console.log('watch fx ran')
+    })
+    const stopEffect = watchEffect(() => {
+      console.log('watch effect ran', search.value)
+    })
 
-    let name ='mario'
-    let age = 30
+    const matchingNames = computed(() => {
+      return names.value.filter((name) => name.includes(search.value))
+    })
 
     const handleClick = () => {
-      console.log(p, p.value)
-      p.value.classList.add('test')
+      stopWatch()
+      stopWatch()
     }
 
-    return { name, age, handleClick, p }
+    return { names, search, matchingNames }
   }
 }
 </script>
