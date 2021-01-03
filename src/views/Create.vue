@@ -31,7 +31,7 @@ export default {
         const tags = ref([])
 
         const router = useRouter()
-            console.log(router)
+            //console.log(router)
 
         const handleKeydown = () => {
             if (!tags.value.includes(tag.value)){

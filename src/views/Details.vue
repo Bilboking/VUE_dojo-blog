@@ -10,18 +10,22 @@
 </template>
 
 <script>
-import getPost from '../composables/getPost'
+import getPost from '@/composables/getPost'
 import Spinner from '../components/Spinner.vue'
+import { useRoute } from 'vue-router' 
 
 export default {
     props: ['id'],
     components: { Spinner },
     setup(props){
-       const { post, error, load } = getPost(props.id)
+      const route = useRoute()
+      //console.log(route)
 
-        load()
+      const { post, error, load } = getPost(route.params.id)
 
-        return { post, error }
+      load()
+
+      return { post, error }
     }
 }
 </script>
